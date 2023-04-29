@@ -39,10 +39,10 @@ if [ -d /home/erik/ARCO/ARCOLINUX/arcolinux-app-dev/usr/share/arcolinux-app/work
 fi
 
 echo "Keyring from ArcoLinux"
-cp /home/erik/ARCO/ARCOLINUX-REPO/arcolinux_repo/x86_64/arcolinux-keyring*pkg.tar.zst /home/erik/ARCO/ARCOLINUX/arcolinux-app-dev/usr/share/arcolinux-app/packages/
+cp /home/erik/ARCO/ARCOLINUX-REPO/arcolinux_repo/x86_64/arcolinux-keyring*pkg.tar.zst /home/erik/ARCO/ARCOLINUX/arcolinux-app-dev/usr/share/arcolinux-app/packages/arcolinux-keyring
 
 echo "Mirror from ArcoLinux"
-cp /home/erik/ARCO/ARCOLINUX-REPO/arcolinux_repo/x86_64/arcolinux-mirror*pkg.tar.zst /home/erik/ARCO/ARCOLINUX/arcolinux-app-dev/usr/share/arcolinux-app/packages/
+cp /home/erik/ARCO/ARCOLINUX-REPO/arcolinux_repo/x86_64/arcolinux-mirror*pkg.tar.zst /home/erik/ARCO/ARCOLINUX/arcolinux-app-dev/usr/share/arcolinux-app/packages/arcolinux-mirrorlist
 
 
 # Below command will backup everything inside the project folder
