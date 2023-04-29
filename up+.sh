@@ -39,9 +39,11 @@ if [ -d /home/erik/ARCO/ARCOLINUX/arcolinux-app-dev/usr/share/arcolinux-app/work
 fi
 
 echo "Keyring from ArcoLinux"
+rm /home/erik/ARCO/ARCOLINUX/arcolinux-app-dev/usr/share/arcolinux-app/packages/arcolinux-keyring/*
 cp /home/erik/ARCO/ARCOLINUX-REPO/arcolinux_repo/x86_64/arcolinux-keyring*pkg.tar.zst /home/erik/ARCO/ARCOLINUX/arcolinux-app-dev/usr/share/arcolinux-app/packages/arcolinux-keyring
 
 echo "Mirror from ArcoLinux"
+rm /home/erik/ARCO/ARCOLINUX/arcolinux-app-dev/usr/share/arcolinux-app/packages/arcolinux-mirrorlist/*
 cp /home/erik/ARCO/ARCOLINUX-REPO/arcolinux_repo/x86_64/arcolinux-mirror*pkg.tar.zst /home/erik/ARCO/ARCOLINUX/arcolinux-app-dev/usr/share/arcolinux-app/packages/arcolinux-mirrorlist
 
 
