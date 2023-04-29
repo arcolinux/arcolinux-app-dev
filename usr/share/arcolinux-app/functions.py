@@ -313,12 +313,44 @@ def append_repo(self, text):
         print(error)
 
 
-def remove_repo(self, text):
-    """Append a new repo"""
+def remove_repos():
+    """remove the repo"""
     try:
-        with open(pacman_conf, "a", encoding="utf-8") as f:
-            f.write("\n\n")
-            f.write(text)
+        with open(pacman_conf, "r", encoding="utf-8") as f:
+            lines = f.readlines()
+            f.close()
+
+        if repo_exist("[arcolinux_repo_testing]"):
+            pos = get_position(lines, "[arcolinux_repo_testing]")
+            del lines[pos + 3]
+            del lines[pos + 2]
+            del lines[pos + 1]
+            del lines[pos]
+
+        if repo_exist("[arcolinux_repo]"):
+            pos = get_position(lines, "[arcolinux_repo]")
+            del lines[pos + 3]
+            del lines[pos + 2]
+            del lines[pos + 1]
+            del lines[pos]
+
+        if repo_exist("[arcolinux_repo_3party]"):
+            pos = get_position(lines, "[arcolinux_repo_3party]")
+            del lines[pos + 3]
+            del lines[pos + 2]
+            del lines[pos + 1]
+            del lines[pos]
+
+        if repo_exist("[arcolinux_repo_xlarge]"):
+            pos = get_position(lines, "[arcolinux_repo_xlarge]")
+            del lines[pos + 2]
+            del lines[pos + 1]
+            del lines[pos]
+
+        with open(pacman_conf, "w", encoding="utf-8") as f:
+            f.writelines(lines)
+            f.close()
+
     except Exception as error:
         print(error)
 

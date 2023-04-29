@@ -114,20 +114,7 @@ class Main(Gtk.Window):
             print("[INFO] : Let's remove the ArcoLinux keys and mirrors")
             fn.remove_arcolinux_key_mirror(self)
             print("[INFO] : Removing the ArcoLinux repos in /etc/pacman.conf")
-            if not fn.repo_exist("[arcolinux_repo_testing]"):
-                print("[INFO] : Removing ArcoLinux test repo (not used)")
-                fn.remove_repo(self, fn.atestrepo)
-            if not fn.repo_exist("[arcolinux_repo]"):
-                print("[INFO] : Removing ArcoLinux repo")
-                fn.remove_repo(self, fn.arepo)
-            if not fn.repo_exist("[arcolinux_repo_3party]"):
-                print("[INFO] : Removing ArcoLinux 3th party repo")
-                fn.remove_repo(self, fn.a3prepo)
-            if not fn.repo_exist("[arcolinux_repo_xlarge]"):
-                print("[INFO] : Removing ArcoLinux XL repo")
-                fn.remove_repo(self, fn.axlrepo)
-            if fn.repo_exist("[arcolinux_repo]"):
-                print("[INFO] : ArcoLinux repos have been removed")
+            fn.remove_repos()
 
 
 if __name__ == "__main__":
