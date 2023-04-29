@@ -25,9 +25,9 @@ message = "This is the ArcoLinux App"
 arcolinux_mirrorlist = "/etc/pacman.d/arcolinux-mirrorlist"
 pacman_conf = "/etc/pacman.conf"
 
-atestrepo = "[arcolinux_repo_testing]\n\
-SigLevel = Optional TrustedOnly\n\
-Include = /etc/pacman.d/arcolinux-mirrorlist"
+atestrepo = "#[arcolinux_repo_testing]\n\
+#SigLevel = Optional TrustedOnly\n\
+#Include = /etc/pacman.d/arcolinux-mirrorlist"
 
 arepo = "[arcolinux_repo]\n\
 SigLevel = Optional TrustedOnly\n\
@@ -165,10 +165,10 @@ def install_arcolinux_key_mirror(self):
     file = listdir(pathway)
 
     try:
-        install = "pacman -U " + pathway + str(file).strip("[]'") + " --noconfirm"
-        print("[INFO] : " + install)
+        command = "pacman -U " + pathway + str(file).strip("[]'") + " --noconfirm"
+        print("[INFO] : " + command)
         subprocess.call(
-            install.split(" "),
+            command.split(" "),
             shell=False,
             stdout=subprocess.PIPE,
             stderr=subprocess.STDOUT,
@@ -180,15 +180,44 @@ def install_arcolinux_key_mirror(self):
     pathway = base_dir + "/packages/arcolinux-mirrorlist/"
     file = listdir(pathway)
     try:
-        install = "pacman -U " + pathway + str(file).strip("[]'") + " --noconfirm"
-        print("[INFO] : " + install)
+        command = "pacman -U " + pathway + str(file).strip("[]'") + " --noconfirm"
+        print("[INFO] : " + command)
         subprocess.call(
-            install.split(" "),
+            command.split(" "),
             shell=False,
             stdout=subprocess.PIPE,
             stderr=subprocess.STDOUT,
         )
         print("[INFO] : ArcoLinux mirrorlist is now installed")
+    except Exception as error:
+        print(error)
+
+
+# remove ArcoLinux mirrorlist and key package
+def remove_arcolinux_key_mirror(self):
+    try:
+        command = "pacman -Rs arcolinux-keyring-git --noconfirm"
+        print("[INFO] : " + command)
+        subprocess.call(
+            command.split(" "),
+            shell=False,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.STDOUT,
+        )
+        print("[INFO] : ArcoLinux keyring is now removed")
+    except Exception as error:
+        print(error)
+
+    try:
+        command = "pacman -Rs arcolinux-mirrorlist-git --noconfirm"
+        print("[INFO] : " + command)
+        subprocess.call(
+            command.split(" "),
+            shell=False,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.STDOUT,
+        )
+        print("[INFO] : ArcoLinux mirrorlist is now removed")
     except Exception as error:
         print(error)
 
@@ -275,6 +304,16 @@ def permissions(dst):
 
 
 def append_repo(self, text):
+    """Append a new repo"""
+    try:
+        with open(pacman_conf, "a", encoding="utf-8") as f:
+            f.write("\n\n")
+            f.write(text)
+    except Exception as error:
+        print(error)
+
+
+def remove_repo(self, text):
     """Append a new repo"""
     try:
         with open(pacman_conf, "a", encoding="utf-8") as f:
