@@ -74,14 +74,11 @@ def GUI(self, Gtk, GdkPixbuf, fn):
 
     if not (
         fn.check_package_installed("arcolinux-keyring")
-        and fn.check_package_installed("arcolinux-mirrorlist-git")
+        or fn.check_package_installed("arcolinux-mirrorlist-git")
     ):
         self.arco_key_mirror = Gtk.Button(label="Install")
         self.arco_key_mirror._value = 1
-
-    if fn.check_package_installed("arcolinux-keyring") and fn.check_package_installed(
-        "arcolinux-mirrorlist-git"
-    ):
+    else:
         self.arco_key_mirror = Gtk.Button(label="Remove")
         self.arco_key_mirror._value = 2
 

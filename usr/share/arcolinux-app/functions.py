@@ -136,6 +136,19 @@ def check_package_installed(package):
         return False
 
 
+# check if repo exists
+def repo_exist(value):
+    """check repo_exists"""
+    with open(pacman_conf, "r", encoding="utf-8") as f:
+        lines = f.readlines()
+        f.close()
+
+    for line in lines:
+        if value in line:
+            return True
+    return False
+
+
 # install package
 def install_package(self, package):
     command = "pacman -S " + package + " --noconfirm --needed"
@@ -196,7 +209,7 @@ def install_arcolinux_key_mirror(self):
 # remove ArcoLinux mirrorlist and key package
 def remove_arcolinux_key_mirror(self):
     try:
-        command = "pacman -Rs arcolinux-keyring-git --noconfirm"
+        command = "pacman -Rs arcolinux-keyring --noconfirm"
         print("[INFO] : " + command)
         subprocess.call(
             command.split(" "),
@@ -303,7 +316,7 @@ def permissions(dst):
 # =====================================================
 
 
-def append_repo(self, text):
+def append_repo(text):
     """Append a new repo"""
     try:
         with open(pacman_conf, "a", encoding="utf-8") as f:
@@ -311,6 +324,24 @@ def append_repo(self, text):
             f.write(text)
     except Exception as error:
         print(error)
+
+
+def add_repos():
+    print("[INFO] : Checking whether the repos have been added")
+    if not repo_exist("[arcolinux_repo_testing]"):
+        print("[INFO] : Adding ArcoLinux test repo (not used)")
+        append_repo(atestrepo)
+    if not repo_exist("[arcolinux_repo]"):
+        print("[INFO] : Adding ArcoLinux repo")
+        append_repo(arepo)
+    if not repo_exist("[arcolinux_repo_3party]"):
+        print("[INFO] : Adding ArcoLinux 3th party repo")
+        append_repo(a3prepo)
+    if not repo_exist("[arcolinux_repo_xlarge]"):
+        print("[INFO] : Adding ArcoLinux XL repo")
+        append_repo(axlrepo)
+    if repo_exist("[arcolinux_repo]"):
+        print("[INFO] : ArcoLinux repos have been installed")
 
 
 def remove_repos():
@@ -353,15 +384,3 @@ def remove_repos():
 
     except Exception as error:
         print(error)
-
-
-def repo_exist(value):
-    """check repo_exists"""
-    with open(pacman_conf, "r", encoding="utf-8") as f:
-        lines = f.readlines()
-        f.close()
-
-    for line in lines:
-        if value in line:
-            return True
-    return False
