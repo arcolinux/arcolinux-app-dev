@@ -104,18 +104,17 @@ class Main(Gtk.Window):
             "[INFO] : ##################################################################"
         )
 
-        try:
-            fn.os.chdir("/tmp/" + choice + "/installation-scripts/")
-        except Exception as error:
-            print(error)
+        print("[INFO] : Changed to /tmp folder")
+        fn.os.chdir("/tmp/" + choice + "/installation-scripts/")
 
         command = (
             "/tmp/" + choice + "/installation-scripts/40-build-the-iso-local-again.sh"
         )
 
+        print("[INFO] : Launching the building script")
         try:
             fn.subprocess.call(
-                "alacritty -e" + command,
+                "alacritty --hold -e" + command,
                 shell=True,
                 stdout=fn.subprocess.PIPE,
                 stderr=fn.subprocess.STDOUT,
