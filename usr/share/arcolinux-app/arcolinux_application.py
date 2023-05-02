@@ -120,6 +120,7 @@ class Main(Gtk.Window):
         gui.GUI(self, Gtk, GdkPixbuf, fn)
 
     def on_close_clicked(self, widget):
+        fn.cleanup_pacman()
         Gtk.main_quit()
 
     def on_save_clicked(self, widget):
@@ -419,6 +420,33 @@ class Main(Gtk.Window):
             fn.remove_repos()
             self.arco_key_mirror.set_label("Install")
             self.arco_key_mirror._value = 1
+
+    def on_pacman_reset_local_clicked(self, widget):
+        if fn.path.isfile(fn.pacman_conf + ".bak"):
+            fn.shutil.copy(fn.pacman_conf + ".bak", fn.pacman_conf)
+            print(
+                "[INFO] : We have used /etc/pacman.conf.bak to reset /etc/pacman.conf"
+            )
+            fn.create_actions_log(
+                launchtime,
+                "[INFO] %s Let's install the ArcoLinux keys and mirrors" % str(now)
+                + "\n",
+            )
+
+    def on_pacman_reset_online_clicked(self, widget):
+        fn.shutil.copy(fn.pacman_arco, fn.pacman_conf)
+        if fn.distr == "arch":
+            fn.shutil.copy(fn.pacman_arch, fn.pacman_conf)
+        if fn.distr == "endeavouros":
+            fn.shutil.copy(fn.pacman_eos, fn.pacman_conf)
+        if fn.distr == "garuda":
+            fn.shutil.copy(fn.pacman_garuda, fn.pacman_conf)
+        print("[INFO] : We have used the online pacman.conf /etc/pacman.conf")
+        fn.create_actions_log(
+            launchtime,
+            "[INFO] %s We have used the online pacman.conf /etc/pacman.conf" % str(now)
+            + "\n",
+        )
 
 
 if __name__ == "__main__":

@@ -27,6 +27,10 @@ arcolinux_mirrorlist = "/etc/pacman.d/arcolinux-mirrorlist"
 pacman_conf = "/etc/pacman.conf"
 mirrorlist = "/etc/pacman.d/mirrorlist"
 log_dir = "/var/log/arcolinux-app/"
+pacman_arch = "/usr/share/arcolinux-app/data/arch/pacman.conf"
+pacman_arco = "/usr/share/arcolinux-app/data/arco/pacman.conf"
+pacman_eos = "/usr/share/arcolinux-app/data/eos/pacman.conf"
+pacman_garuda = "/usr/share/arcolinux-app/data/garuda/pacman.conf"
 
 atestrepo = "#[arcolinux_repo_testing]\n\
 #SigLevel = Optional TrustedOnly\n\
@@ -331,6 +335,16 @@ def permissions(dst):
 # =====================================================
 #               START PACMAN.CONF
 # =====================================================
+
+
+def cleanup_pacman():
+    """Cleanup empty lines"""
+    try:
+        with open(pacman_conf, "w", encoding="utf-8") as f:
+            f.write.replace("\n\n", "\n")
+            f.write()
+    except Exception as error:
+        print(error)
 
 
 def append_repo(text):
