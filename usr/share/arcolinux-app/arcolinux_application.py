@@ -143,7 +143,7 @@ class Main(Gtk.Window):
         # if arcolinux mirror and key not installed
         if not fn.check_package_installed(
             "arcolinux-keyring"
-        ) or fn.check_package_installed("arcolinux-mirrorlist-git"):
+        ) or not fn.check_package_installed("arcolinux-mirrorlist-git"):
             print("[INFO] : Installing the ArcoLinux keyring and mirrorlist - ERIK")
             fn.create_actions_log(
                 launchtime,
@@ -151,7 +151,7 @@ class Main(Gtk.Window):
                 + "\n",
             )
             fn.install_arcolinux_key_mirror(self)
-            # fn.add_repos()
+            fn.add_repos()
             self.arco_key_mirror.set_label("Remove")
             self.arco_key_mirror._value = 2
 
