@@ -8,6 +8,7 @@ import gui
 import splash
 import functions as fn
 from time import sleep
+from datetime import datetime
 
 gi.require_version("Gtk", "3.0")
 
