@@ -120,7 +120,6 @@ class Main(Gtk.Window):
         gui.GUI(self, Gtk, GdkPixbuf, fn)
 
     def on_close_clicked(self, widget):
-        fn.cleanup_pacman()
         Gtk.main_quit()
 
     def on_save_clicked(self, widget):

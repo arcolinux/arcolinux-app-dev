@@ -337,16 +337,6 @@ def permissions(dst):
 # =====================================================
 
 
-def cleanup_pacman():
-    """Cleanup empty lines"""
-    try:
-        with open(pacman_conf, "w", encoding="utf-8") as f:
-            f.write.replace("\n\n", "\n")
-            f.write()
-    except Exception as error:
-        print(error)
-
-
 def append_repo(text):
     """Append a new repo"""
     try:
