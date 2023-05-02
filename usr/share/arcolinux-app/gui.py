@@ -85,6 +85,7 @@ def GUI(self, Gtk, GdkPixbuf, fn):
     for option in options:
         self.iso_choices.append_text(option)
     self.iso_choices.set_active(0)
+    self.iso_choices.set_wrap_width(1)
 
     self.enable_hold = Gtk.CheckButton(label="hold")
 
