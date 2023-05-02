@@ -104,7 +104,9 @@ class Main(Gtk.Window):
             "[INFO] : ##################################################################"
         )
 
-        print("[INFO] : Changed to /tmp folder")
+        print(
+            "[INFO] : Changed to /tmp/" + choice + "/installation-scripts/" + " folder"
+        )
         fn.os.chdir("/tmp/" + choice + "/installation-scripts/")
 
         command = (
@@ -114,7 +116,7 @@ class Main(Gtk.Window):
         print("[INFO] : Launching the building script")
         try:
             fn.subprocess.call(
-                "alacritty --hold -e" + command,
+                "alacritty -e" + command,
                 shell=True,
                 stdout=fn.subprocess.PIPE,
                 stderr=fn.subprocess.STDOUT,
