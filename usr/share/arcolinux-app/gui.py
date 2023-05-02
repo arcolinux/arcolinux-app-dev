@@ -189,7 +189,7 @@ def GUI(self, Gtk, GdkPixbuf, fn):
     self.pacman_reset_local = Gtk.Button(label="From local file")
     self.pacman_reset_local.set_size_request(280, 0)
     self.pacman_reset_local.connect("clicked", self.on_pacman_reset_local_clicked)
-    self.pacman_reset_online = Gtk.Button(label="Online")
+    self.pacman_reset_online = Gtk.Button(label="Cached")
     self.pacman_reset_online.set_size_request(280, 0)
     self.pacman_reset_online.connect("clicked", self.on_pacman_reset_online_clicked)
 

@@ -441,11 +441,10 @@ class Main(Gtk.Window):
             fn.shutil.copy(fn.pacman_eos, fn.pacman_conf)
         if fn.distr == "garuda":
             fn.shutil.copy(fn.pacman_garuda, fn.pacman_conf)
-        print("[INFO] : We have used the online pacman.conf /etc/pacman.conf")
+        print("[INFO] : We have used the cached pacman.conf")
         fn.create_actions_log(
             launchtime,
-            "[INFO] %s We have used the online pacman.conf /etc/pacman.conf" % str(now)
-            + "\n",
+            "[INFO] %s We have used the cached pacman.conf" % str(now) + "\n",
         )
 
 
