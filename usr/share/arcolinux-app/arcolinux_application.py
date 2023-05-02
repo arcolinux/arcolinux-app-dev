@@ -140,6 +140,21 @@ class Main(Gtk.Window):
         package = "archiso"
         fn.install_package(self, package)
 
+        # if arcolinux mirror and key not installed
+        if not fn.check_package_installed(
+            "arcolinux-keyring"
+        ) or fn.check_package_installed("arcolinux-mirrorlist-git"):
+            print("[INFO] : Installing the ArcoLinux keyring and mirrorlist - ERIK")
+            fn.create_actions_log(
+                launchtime,
+                "[INFO] %s Installing the ArcoLinux keyring and mirrorlist" % str(now)
+                + "\n",
+            )
+            fn.install_arcolinux_key_mirror(self)
+            # fn.add_repos()
+            self.arco_key_mirror.set_label("Remove")
+            self.arco_key_mirror._value = 2
+
         # making sure we start with a clean slate
         print("[INFO] : Let's remove any old previous building folders")
         fn.remove_dir(self, "/root/ArcoLinux-Out")
@@ -203,15 +218,27 @@ class Main(Gtk.Window):
             launchtime,
             "[INFO] %s Launching the building script" % str(now) + "\n",
         )
-        try:
-            fn.subprocess.call(
-                "alacritty -e" + command,
-                shell=True,
-                stdout=fn.subprocess.PIPE,
-                stderr=fn.subprocess.STDOUT,
-            )
-        except Exception as error:
-            print(error)
+
+        if self.enable_hold.get_active():
+            try:
+                fn.subprocess.call(
+                    "alacritty --hold -e" + command,
+                    shell=True,
+                    stdout=fn.subprocess.PIPE,
+                    stderr=fn.subprocess.STDOUT,
+                )
+            except Exception as error:
+                print(error)
+        else:
+            try:
+                fn.subprocess.call(
+                    "alacritty -e" + command,
+                    shell=True,
+                    stdout=fn.subprocess.PIPE,
+                    stderr=fn.subprocess.STDOUT,
+                )
+            except Exception as error:
+                print(error)
 
         # move iso from /root/ArcoLinux-Out/ to home directory
 

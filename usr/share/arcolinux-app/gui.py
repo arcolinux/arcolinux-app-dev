@@ -18,6 +18,7 @@ def GUI(self, Gtk, GdkPixbuf, fn):
     hbox4 = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=10)
     hbox5 = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=10)
     hbox6 = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=10)
+    hbox_message = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=10)
     hbox_buttons = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=10)
 
     # ======================================================================
@@ -85,6 +86,8 @@ def GUI(self, Gtk, GdkPixbuf, fn):
         self.iso_choices.append_text(option)
     self.iso_choices.set_active(0)
 
+    self.enable_hold = Gtk.CheckButton(label="hold")
+
     self.create_arco = Gtk.Button(label="Create")
     self.create_arco.set_size_request(280, 0)
     self.create_arco.connect("clicked", self.on_create_arco_clicked)
@@ -92,6 +95,7 @@ def GUI(self, Gtk, GdkPixbuf, fn):
     hbox0.pack_start(lbl_create_arco, False, False, 0)
     hbox0.pack_start(self.iso_choices, False, False, 0)
     hbox0.pack_end(self.create_arco, False, False, 0)
+    hbox0.pack_end(self.enable_hold, False, False, 0)
 
     # ======================================================================
     #                           HBOX 1
@@ -179,15 +183,15 @@ def GUI(self, Gtk, GdkPixbuf, fn):
     # #                            Message
     # # ======================================================================
 
-    # lblmessage = Gtk.Label()
-    # lblmessage.set_justify(Gtk.Justification.CENTER)
-    # lblmessage.set_line_wrap(True)
-    # lblmessage.set_markup(
-    #     '<span foreground="orange" size="xx-large">' + fn.message + "</span>"
-    # )  # noqa
-
-    # hbox_Message.pack_start(lblmessage, True, False, 0)
-
+    lblmessage = Gtk.Label()
+    lblmessage.set_justify(Gtk.Justification.CENTER)
+    lblmessage.set_line_wrap(True)
+    lblmessage.set_markup(
+        '<span foreground="white" size="x-large">Use the hold option to keep Alacritty open and analyze. \n \
+Do not use it to build an ISO!</span>'
+    )
+    # if self.enable_hold.get_active():
+    hbox_message.pack_start(lblmessage, True, False, 0)
     # ======================================================================
     #                       HBOX_BUTTONS
     # ======================================================================
@@ -216,5 +220,6 @@ def GUI(self, Gtk, GdkPixbuf, fn):
     vbox.pack_start(hbox3, False, False, 0)
     vbox.pack_start(hbox4, False, False, 0)
     vbox.pack_end(hbox_buttons, False, False, 7)  # Buttons
+    vbox.pack_end(hbox_message, False, False, 7)  # Message
 
     scrolledWindow.add(vbox)
