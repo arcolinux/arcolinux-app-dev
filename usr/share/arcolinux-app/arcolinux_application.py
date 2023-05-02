@@ -433,7 +433,7 @@ class Main(Gtk.Window):
                 + "\n",
             )
 
-    def on_pacman_reset_online_clicked(self, widget):
+    def on_pacman_reset_cached_clicked(self, widget):
         fn.shutil.copy(fn.pacman_arco, fn.pacman_conf)
         if fn.distr == "arch":
             fn.shutil.copy(fn.pacman_arch, fn.pacman_conf)
