@@ -2,14 +2,15 @@
 # =                  Author: Erik Dubois                          =
 # =================================================================
 
-import os
-import subprocess
-import psutil
-import shutil
 import datetime
+import os
+import shutil
+import subprocess
+from os import getlogin, listdir, mkdir, path, rmdir
 from pathlib import Path
+
+import psutil
 from distro import id
-from os import getlogin, path, mkdir, rmdir, listdir
 
 DEBUG = False
 

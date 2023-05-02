@@ -3,16 +3,17 @@
 # =                  Author: Erik Dubois                          =
 # =================================================================
 
+from datetime import datetime
+from time import sleep
+
+import functions as fn
 import gi
 import gui
 import splash
-import functions as fn
-from time import sleep
-from datetime import datetime
 
 gi.require_version("Gtk", "3.0")
 
-from gi.repository import Gtk, GdkPixbuf  # noqa
+from gi.repository import GdkPixbuf, Gtk  # noqa
 
 now = datetime.now()
 global launchtime
@@ -301,10 +302,6 @@ class Main(Gtk.Window):
             launchtime,
             "[INFO] %s Let's fix the keys of Arch Linux" % str(now) + "\n",
         )
-        fn.create_actions_log(
-            launchtime,
-            "[INFO] %s Let's fix the keys of Arch Linux" % str(now) + "\n",
-        )
         command = fn.base_dir + "/scripts/fixkey"
         package = "alacritty"
         fn.install_package(self, package)
@@ -359,7 +356,6 @@ class Main(Gtk.Window):
         print("[INFO] : Server = http://mirror.osbeck.com/archlinux/\$repo/os/\$arch")
         print("[INFO] : Server = https://geo.mirror.pkgbuild.com/\$repo/os/\$arch")
         print("[INFO] : Done")
-        print("[INFO] : Let's install the ArcoLinux keys and mirrors")
         fn.create_actions_log(
             launchtime,
             "[INFO] %s We changed the content of your /etc/pacman.d/mirrorlist"
