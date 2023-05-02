@@ -3,17 +3,15 @@
 # =                  Author: Erik Dubois                          =
 # =================================================================
 
-from datetime import datetime
-from time import sleep
-
-import functions as fn
 import gi
 import gui
 import splash
+import functions as fn
+from time import sleep
 
 gi.require_version("Gtk", "3.0")
 
-from gi.repository import GdkPixbuf, Gtk  # noqa
+from gi.repository import Gtk, GdkPixbuf  # noqa
 
 now = datetime.now()
 global launchtime
