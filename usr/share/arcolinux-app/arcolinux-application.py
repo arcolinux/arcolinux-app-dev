@@ -93,8 +93,16 @@ class Main(Gtk.Window):
         # /tmp/arcolinuxd/installation-scripts/40-build-the-iso-local-again.sh
 
         print("[INFO] : Start building the iso in Alacritty")
+        print(
+            "[INFO] : #################################################################"
+        )
         print("[INFO] : Sometimes you have to try and build it a second time")
-        print("[INFO] : for it to work because of the special packages from AUR")
+        print(
+            "[INFO] : for it to work because of the special packages from AUR and repos"
+        )
+        print(
+            "[INFO] : ##################################################################"
+        )
 
         try:
             fn.os.chdir("/tmp/" + choice + "/installation-scripts/")
@@ -183,6 +191,18 @@ class Main(Gtk.Window):
         package = "alacritty"
         fn.install_package(self, package)
         fn.run_script(self, command)
+        print("[INFO] : We changed the content of your /etc/pacman.d/mirrorlist")
+        print(
+            "[INFO] : Server = http://mirror.rackspace.com/archlinux/\$repo/os/\$arch"
+        )
+        print(
+            "[INFO] : Server = https://mirror.rackspace.com/archlinux/\$repo/os/\$arch"
+        )
+        print("[INFO] : Server = https://mirrors.kernel.org/archlinux/\$repo/os/\$arch")
+        print("[INFO] : Server = https://mirror.osbeck.com/archlinux/\$repo/os/\$arch")
+        print("[INFO] : Server = http://mirror.osbeck.com/archlinux/\$repo/os/\$arch")
+        print("[INFO] : Server = https://geo.mirror.pkgbuild.com/\$repo/os/\$arch")
+        print("[INFO] : Done")
 
     def on_arco_key_mirror_clicked(self, widget):
         if self.arco_key_mirror._value == 1:
