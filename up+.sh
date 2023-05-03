@@ -36,14 +36,14 @@ workdir=$(pwd)
 echo "Checking for newer files online first"
 git pull
 
-if [ -d /home/erik/ARCO/ARCOLINUX/arcolinux-app-dev/usr/share/arcolinux-app/work/ ]; then
-	sudo rm -r /home/erik/ARCO/ARCOLINUX/arcolinux-app-dev/usr/share/arcolinux-app/work/
-fi
+# if [ -d /home/erik/ARCO/ARCOLINUX/arcolinux-app-dev/usr/share/arcolinux-app/work/ ]; then
+# 	sudo rm -r /home/erik/ARCO/ARCOLINUX/arcolinux-app-dev/usr/share/arcolinux-app/work/
+# fi
 
-# removing pycache
-if [ -d /home/erik/ARCO/ARCOLINUX/arcolinux-app-dev/usr/share/arcolinux-app/__pycache__ ]; then
-	sudo rm -r /home/erik/ARCO/ARCOLINUX/arcolinux-app-dev/usr/share/arcolinux-app/__pycache__
-fi
+# # removing pycache
+# if [ -d /home/erik/ARCO/ARCOLINUX/arcolinux-app-dev/usr/share/arcolinux-app/__pycache__ ]; then
+# 	sudo rm -r /home/erik/ARCO/ARCOLINUX/arcolinux-app-dev/usr/share/arcolinux-app/__pycache__
+# fi
 
 
 echo "Keyring from ArcoLinux"
