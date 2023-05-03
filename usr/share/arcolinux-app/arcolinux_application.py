@@ -219,26 +219,25 @@ class Main(Gtk.Window):
             "[INFO] %s Launching the building script" % str(now) + "\n",
         )
 
-        if self.enable_hold.get_active():
-            try:
+        
+        try:
+            if self.enable_hold.get_active():
                 fn.subprocess.call(
                     "alacritty --hold -e" + command,
                     shell=True,
                     stdout=fn.subprocess.PIPE,
                     stderr=fn.subprocess.STDOUT,
                 )
-            except Exception as error:
-                print(error)
-        else:
-            try:
+            else:
                 fn.subprocess.call(
                     "alacritty -e" + command,
                     shell=True,
                     stdout=fn.subprocess.PIPE,
                     stderr=fn.subprocess.STDOUT,
                 )
-            except Exception as error:
-                print(error)
+                
+        except Exception as error:
+            print(error)
 
         # move iso from /root/ArcoLinux-Out/ to home directory
 
