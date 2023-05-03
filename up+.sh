@@ -41,9 +41,9 @@ git pull
 # fi
 
 # removing pycache
-if [ -d /home/erik/ARCO/ARCOLINUX/arcolinux-app-dev/usr/share/arcolinux-app/__pycache__ ]; then
-	sudo rm -r /home/erik/ARCO/ARCOLINUX/arcolinux-app-dev/usr/share/arcolinux-app/__pycache__
-fi
+# if [ -d /home/erik/ARCO/ARCOLINUX/arcolinux-app-dev/usr/share/arcolinux-app/__pycache__ ]; then
+# 	sudo rm -r /home/erik/ARCO/ARCOLINUX/arcolinux-app-dev/usr/share/arcolinux-app/__pycache__
+# fi
 
 
 echo "Keyring from ArcoLinux"
