@@ -10,7 +10,6 @@ import functions as fn
 import gi
 import gui
 import splash
-import logging
 
 gi.require_version("Gtk", "3.0")
 
@@ -28,7 +27,6 @@ fn.create_actions_log(
     launchtime,
     "[INFO] %s App Started" % str(now) + "\n",
 )
-logging.info("Building Gui from Glade")
 
 print("---------------------------------------------------------------------------")
 print("[INFO] : pkgver = pkgversion")
@@ -97,6 +95,37 @@ if fn.path.isfile(fn.mirrorlist):
             )
         except Exception as error:
             print(error)
+
+
+def build_arch(self):
+    # starting the build script
+    command = "mkarchiso -v -o " + fn.home + " /usr/share/archiso/configs/releng/"
+    fn.run_command(command)
+
+    # changing permission
+    x = datetime.now()
+    year = str(x.year)
+    month = str(x.strftime("%m"))
+    day = str(x.strftime("%d"))
+    iso_name = "/archlinux-" + year + "." + month + "." + day + "-x86_64.iso"
+    destination = fn.home + iso_name
+    fn.permissions(destination)
+
+    # making sure we start with a clean slate
+    if fn.path_check(fn.base_dir + "/work"):
+        fn.remove_dir(self, fn.base_dir + "/work")
+        print("[INFO] : Cleanup - Removing : " + fn.base_dir + "/work")
+    if fn.path_check("/root/work"):
+        fn.remove_dir(self, "/root/work")
+        print("[INFO] : Cleanup - Removing : /root/work")
+
+    GLib.idle_add(
+        fn.show_in_app_notification,
+        self,
+        "The creation of the Arch Linux iso is finished",
+        False,
+    )
+    print("[INFO] : Check your home directory for the iso")
 
 
 class Main(Gtk.Window):
@@ -302,12 +331,16 @@ class Main(Gtk.Window):
         fn.install_package(self, package)
 
         # making sure we start with a clean slate
-        fn.remove_dir(self, fn.base_dir + "/work")
-        fn.remove_dir(self, "/root/work")
+        if fn.path_check(fn.base_dir + "/work"):
+            fn.remove_dir(self, "fn.base_dir" + "/work")
+            print("[INFO] : Cleanup - Removing : " + fn.base_dir + "/work")
+        if fn.path_check("/root/work"):
+            fn.remove_dir(self, "/root/work")
+            print("[INFO] : Cleanup - Removing : /root/work")
 
-        t = fn.threading.Thread(target=fn.build_arch, args=self)
+        t = fn.threading.Thread(target=build_arch, args=(self,))
         t.start()
-        t.join()
+        # t.join()
 
     def on_clean_pacman_cache_clicked(self, widget):
         now = datetime.now().strftime("%H:%M:%S")
@@ -460,10 +493,7 @@ class Main(Gtk.Window):
             "[INFO] %s  Installing the ArcoLinux repos in /etc/pacman.conf" % str(now)
             + "\n",
         )
-
-        t = fn.threading.Thread(fn.install_arcolinux_key_mirror(self))
-        t.start()
-
+        fn.install_arcolinux_key_mirror(self)
         fn.add_repos()
         GLib.idle_add(
             fn.show_in_app_notification,
