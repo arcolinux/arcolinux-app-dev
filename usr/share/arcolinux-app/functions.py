@@ -482,6 +482,33 @@ def install_packages_path(self, path):
             install_package(self, line)
 
 
+def build_arch(self):
+    # starting the build script
+    command = "mkarchiso -v -o " + home + " /usr/share/archiso/configs/releng/"
+    run_command(command)
+
+    # changing permission
+    x = datetime.datetime.now()
+    year = str(x.year)
+    month = str(x.strftime("%m"))
+    day = str(x.strftime("%d"))
+    iso_name = "/archlinux-" + year + "." + month + "." + day + "-x86_64.iso"
+    destination = home + iso_name
+    permissions(destination)
+    print("[INFO] : Check your home directory for the iso")
+
+    # making sure we start with a clean slate
+    remove_dir(self, base_dir + "/work")
+    remove_dir(self, "/root/work")
+
+    GLib.idle_add(
+        show_in_app_notification,
+        self,
+        "The creation of the Arch Linux iso is finished",
+        False,
+    )
+
+
 # =====================================================
 #               NOTIFICATIONS
 # =====================================================

@@ -10,6 +10,7 @@ import functions as fn
 import gi
 import gui
 import splash
+import logging
 
 gi.require_version("Gtk", "3.0")
 
@@ -27,6 +28,7 @@ fn.create_actions_log(
     launchtime,
     "[INFO] %s App Started" % str(now) + "\n",
 )
+logging.info("Building Gui from Glade")
 
 print("---------------------------------------------------------------------------")
 print("[INFO] : pkgver = pkgversion")
@@ -117,13 +119,6 @@ class Main(Gtk.Window):
 
     def on_close_clicked(self, widget):
         Gtk.main_quit()
-
-    def on_save_clicked(self, widget):
-        t = fn.threading.Thread(
-            target=fn.set_config, args=(self.fileSystem.get_active_text(),)
-        )
-        t.daemon = True
-        t.start()
 
     def on_create_arco_clicked(self, widget):
         now = datetime.now().strftime("%H:%M:%S")
@@ -295,11 +290,6 @@ class Main(Gtk.Window):
         fn.permissions(destination)
         print("[INFO] : Check your home directory for the iso")
 
-    def build_arch(self):
-        # starting the build script
-        command = "mkarchiso -v -o " + fn.home + " /usr/share/archiso/configs/releng/"
-        fn.run_command(command)
-
     def on_create_arch_clicked(self, widget):
         now = datetime.now().strftime("%H:%M:%S")
         print("[INFO] : Let's build an Arch Linux iso")
@@ -315,29 +305,9 @@ class Main(Gtk.Window):
         fn.remove_dir(self, fn.base_dir + "/work")
         fn.remove_dir(self, "/root/work")
 
-        t = fn.threading.Thread(target=self.build_arch)
+        t = fn.threading.Thread(target=fn.build_arch, args=self)
         t.start()
-
-        # changing permission
-        x = fn.datetime.datetime.now()
-        year = str(x.year)
-        month = str(x.strftime("%m"))
-        day = str(x.strftime("%d"))
-        iso_name = "/archlinux-" + year + "." + month + "." + day + "-x86_64.iso"
-        destination = fn.home + iso_name
-        fn.permissions(destination)
-        print("[INFO] : Check your home directory for the iso")
-
-        # making sure we start with a clean slate
-        fn.remove_dir(self, fn.base_dir + "/work")
-        fn.remove_dir(self, "/root/work")
-
-        GLib.idle_add(
-            fn.show_in_app_notification,
-            self,
-            "The creation of the Arch Linux iso is finished",
-            False,
-        )
+        t.join()
 
     def on_clean_pacman_cache_clicked(self, widget):
         now = datetime.now().strftime("%H:%M:%S")
