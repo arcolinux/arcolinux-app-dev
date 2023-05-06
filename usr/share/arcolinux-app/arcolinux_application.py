@@ -295,6 +295,11 @@ class Main(Gtk.Window):
         fn.permissions(destination)
         print("[INFO] : Check your home directory for the iso")
 
+    def build_arch(self):
+        # starting the build script
+        command = "mkarchiso -v -o " + fn.home + " /usr/share/archiso/configs/releng/"
+        fn.run_command(command)
+
     def on_create_arch_clicked(self, widget):
         now = datetime.now().strftime("%H:%M:%S")
         print("[INFO] : Let's build an Arch Linux iso")
@@ -310,9 +315,8 @@ class Main(Gtk.Window):
         fn.remove_dir(self, fn.base_dir + "/work")
         fn.remove_dir(self, "/root/work")
 
-        # starting the build script
-        command = "mkarchiso -v -o " + fn.home + " /usr/share/archiso/configs/releng/"
-        fn.run_command(command)
+        t = fn.threading.Thread(target=self.build_arch)
+        t.start()
 
         # changing permission
         x = fn.datetime.datetime.now()
@@ -398,7 +402,7 @@ class Main(Gtk.Window):
         GLib.idle_add(
             fn.show_in_app_notification,
             self,
-            "Creation of probe link finished",
+            "Creation of probe link is finished",
             False,
         )
 
@@ -486,7 +490,10 @@ class Main(Gtk.Window):
             "[INFO] %s  Installing the ArcoLinux repos in /etc/pacman.conf" % str(now)
             + "\n",
         )
-        fn.install_arcolinux_key_mirror(self)
+
+        t = fn.threading.Thread(fn.install_arcolinux_key_mirror(self))
+        t.start()
+
         fn.add_repos()
         GLib.idle_add(
             fn.show_in_app_notification,
