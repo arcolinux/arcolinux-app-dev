@@ -97,37 +97,6 @@ if fn.path.isfile(fn.mirrorlist):
             print(error)
 
 
-def build_arch(self):
-    # starting the build script
-    command = "mkarchiso -v -o " + fn.home + " /usr/share/archiso/configs/releng/"
-    fn.run_command(command)
-
-    # changing permission
-    x = datetime.now()
-    year = str(x.year)
-    month = str(x.strftime("%m"))
-    day = str(x.strftime("%d"))
-    iso_name = "/archlinux-" + year + "." + month + "." + day + "-x86_64.iso"
-    destination = fn.home + iso_name
-    fn.permissions(destination)
-
-    # making sure we start with a clean slate
-    if fn.path_check(fn.base_dir + "/work"):
-        fn.remove_dir(self, fn.base_dir + "/work")
-        print("[INFO] : Cleanup - Removing : " + fn.base_dir + "/work")
-    if fn.path_check("/root/work"):
-        fn.remove_dir(self, "/root/work")
-        print("[INFO] : Cleanup - Removing : /root/work")
-
-    GLib.idle_add(
-        fn.show_in_app_notification,
-        self,
-        "The creation of the Arch Linux iso is finished",
-        False,
-    )
-    print("[INFO] : Check your home directory for the iso")
-
-
 class Main(Gtk.Window):
     def __init__(self):
         super(Main, self).__init__(title="ArcoLinux App")
@@ -338,9 +307,34 @@ class Main(Gtk.Window):
             fn.remove_dir(self, "/root/work")
             print("[INFO] : Cleanup - Removing : /root/work")
 
-        t = fn.threading.Thread(target=build_arch, args=(self,))
-        t.start()
-        # t.join()
+        # starting the build script
+        command = "mkarchiso -v -o " + fn.home + " /usr/share/archiso/configs/releng/"
+        fn.run_command(command)
+
+        # changing permission
+        x = fn.datetime.datetime.now()
+        year = str(x.year)
+        month = str(x.strftime("%m"))
+        day = str(x.strftime("%d"))
+        iso_name = "/archlinux-" + year + "." + month + "." + day + "-x86_64.iso"
+        destination = fn.home + iso_name
+        fn.permissions(destination)
+        print("[INFO] : Check your home directory for the iso")
+
+        # making sure we start with a clean slate
+        if fn.path_check(fn.base_dir + "/work"):
+            fn.remove_dir(self, "fn.base_dir" + "/work")
+            print("[INFO] : Cleanup - Removing : " + fn.base_dir + "/work")
+        if fn.path_check("/root/work"):
+            fn.remove_dir(self, "/root/work")
+            print("[INFO] : Cleanup - Removing : /root/work")
+
+        GLib.idle_add(
+            fn.show_in_app_notification,
+            self,
+            "The creation of the Arch Linux iso is finished",
+            False,
+        )
 
     def on_clean_pacman_cache_clicked(self, widget):
         now = datetime.now().strftime("%H:%M:%S")

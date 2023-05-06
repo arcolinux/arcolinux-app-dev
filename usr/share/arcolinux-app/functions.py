@@ -6,7 +6,6 @@ import datetime
 import os
 import shutil
 import subprocess
-import threading
 from os import getlogin, listdir, mkdir, path, rmdir
 from pathlib import Path
 
